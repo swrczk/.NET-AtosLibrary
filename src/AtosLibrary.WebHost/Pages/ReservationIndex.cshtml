@@ -1,0 +1,59 @@
+﻿@page
+@using AtosLibrary.Infrastructure.Entities
+@model AtosLibrary.WebHost.Pages.ReservationIndexModel
+@{
+    ViewData["Title"] = "ReservationIndex";
+}
+
+<h1>ReservationIndex</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <input asp-for="SearchText" class="form-control" placeholder="Reader" aria-label="Reader" aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" asp-page-handler="search">Search</button>
+        </div>
+    </div>
+</form>
+
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th style="width: 10%">User name</th>
+            <th style="width: 70%">Book name</th>
+            <th style="width: 10%">Status</th>
+            <th style="width: 10%">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var contact in Model.Reservations)
+        {
+            <tr>
+                <td> @contact.ReaderName</td>
+                <td> @contact.BookName</td>
+                <td> @contact.Status</td>
+                <td>
+                    @if (contact.Status == EnumStatusReservation.Reserved)
+                    {
+                        <button class="btn btn-success" asp-page-handler="rent" type="submit" asp-route-reservationId="@contact.Id" asp-route-readerId="@contact.ReaderId" asp-route-bookItemId="@contact.BookItemId">
+                            Rent
+                        </button>
+                    }
+                    @if (contact.Status == EnumStatusReservation.Rented)
+                    {
+                        <span asp-validation-for="@contact.DateBeginOfReservation"></span>
+                        <button class="btn btn-dark" asp-page-handler="return" type="submit" asp-route-reservationId="@contact.Id">
+                            Return
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>
+
+@* @section scripts{ *@
+@* <partial name="Shared/_ValidationScriptsPartial"/> *@
+@*}*@

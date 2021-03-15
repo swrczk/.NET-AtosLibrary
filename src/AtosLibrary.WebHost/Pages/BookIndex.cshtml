@@ -1,0 +1,42 @@
+﻿@page
+@model AtosLibrary.WebHost.BookIndexModel
+@{
+    ViewData["Title"] = "BookIndex";
+}
+
+<h1>BookIndex</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <input asp-for="SearchText" class="form-control" placeholder="Book" aria-label="Book" aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+</form>
+
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width:  80%">Title</th>
+                <th style="width:  20%">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var contact in Model.Books)
+        {
+            <tr>
+                <td>@contact.Name</td>
+                <td>
+                    <a class="btn btn-secondary" asp-page="./EditBook" asp-route-id="@contact.Id">Edit</a>
+                    <button class="btn btn-danger" asp-page-handler="delete" type="submit" asp-route-id="@contact.Id">
+                        delete
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <a class="btn btn-dark" asp-page="./CreateBook">Create New</a>
+</form>

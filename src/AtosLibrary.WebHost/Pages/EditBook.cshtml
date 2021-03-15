@@ -1,0 +1,75 @@
+﻿@page "{id:Guid}"
+@model AtosLibrary.WebHost.EditBookModel
+@{
+    ViewData["Title"] = "EditBook";
+}
+
+<h1>EditBook</h1>
+
+<form method="post">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Name</label>
+            <input type="text" class="form-control" placeholder="Name" asp-for="BookModel.Name">
+            <span asp-validation-for="BookModel.Name"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label>Description</label>
+            <textarea type="text" class="form-control" placeholder="Description" asp-for="BookModel.Description"></textarea>
+            <span asp-validation-for="BookModel.Description"></span>
+        </div>
+    </div>
+    <input asp-for="BookModel.Id" type="hidden" />
+    <input asp-for="BookModel.Number" type="hidden" />
+    <button type="submit" class="btn btn-primary">Edit Book</button>
+</form>
+<br />
+
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width:  10%">Item ID</th>
+                <th style="width:  50%">Description</th>
+                <th style="width:  20%">Status</th>
+                <th style="width:  20%">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Model.BookItemModels)
+            {
+                <tr>
+                    <td>@contact.Id</td>
+                    <td>@contact.Description</td>
+                    <td>@contact.BookItemStatus</td>
+                    <td>
+                        @if (contact.BookItemStatus != AtosLibrary.Infrastructure.Entities.EnumBookItemStatus.Deleted)
+                        {
+                            <a class="btn btn-secondary" asp-page="./EditBookItem" asp-route-id="@contact.Id">Edit</a>
+                            <button class="btn btn-danger" asp-page-handler="delete" type="submit" asp-route-bookid="@contact.BookId" asp-route-itemid="@contact.Id" asp-route-description="@contact.Description" asp-route-status="@contact.BookItemStatus">
+                                delete
+                            </button>
+                        }
+                        else
+                        {
+                            <a class="btn btn-secondary disabled">Edit</a>
+                            <button class="btn btn-secondary disabled">
+                                delete
+                            </button>
+                        }
+                    </td>
+
+                    <td>
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+    <button class="btn btn-dark" asp-page-handler="createnewbookitem" type="submit">
+        Create New Book Item
+    </button>
+</form>
