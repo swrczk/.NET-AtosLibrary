@@ -21,7 +21,9 @@
         <thead>
         <tr>
             <th style="width: 10%">User name</th>
-            <th style="width: 70%">Book name</th>
+            <th style="width: 40%">Book name</th>
+            <th style="width: 15%">Date Of Reservation</th>
+            <th style="width: 15%">Date Of Return</th>
             <th style="width: 10%">Status</th>
             <th style="width: 10%">Options</th>
         </tr>
@@ -32,6 +34,8 @@
             <tr>
                 <td> @contact.ReaderName</td>
                 <td> @contact.BookName</td>
+                <td> @contact.DateBeginOfReservation</td>
+                <td> @contact.DateEndOfReservation</td>
                 <td> @contact.Status</td>
                 <td>
                     @if (contact.Status == EnumStatusReservation.Reserved)

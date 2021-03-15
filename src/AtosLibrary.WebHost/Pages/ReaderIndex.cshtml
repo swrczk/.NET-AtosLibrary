@@ -16,11 +16,14 @@
 </form>
 
 <form method="post">
+    <a class="btn btn-dark" asp-page="./CreateReader">Create New</a>
+    <br/>
     <table class="table table-hover">
         <thead>
             <tr>
-                <th style="width: 70%">Name</th>
-                <th style="width: 30%">Options</th>
+                <th style="width: 30%">Name</th>
+                <th style="width: 30%">Surname</th>
+                <th style="width: 40%">Options</th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +31,7 @@
             {
                 <tr>
                     <td>@contact.Name</td>
+                    <td>@contact.Surname</td>
                     <td>
                         <a class="btn btn-success" asp-page="./ReserveBook" asp-route-id="@contact.Id">Reserve Books</a>
                         <a class="btn btn-secondary" asp-page="./EditReader" asp-route-id="@contact.Id">Edit</a>
@@ -40,6 +44,5 @@
             }
         </tbody>
     </table>
-    <a class="btn btn-dark" asp-page="./CreateReader">Create New</a>
 </form>
 
