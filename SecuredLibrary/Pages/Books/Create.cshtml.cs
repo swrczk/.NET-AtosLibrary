@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ContactManager.Data;
 using ContactManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactManager.Pages.Books
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ContactManager.Data.ApplicationDbContext _context;
@@ -36,6 +38,7 @@ namespace ContactManager.Pages.Books
                 return Page();
             }
 
+            Book.Rented = false;
             _context.Book.Add(Book);
             await _context.SaveChangesAsync();
 

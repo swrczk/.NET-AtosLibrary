@@ -1,11 +1,15 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
 @model ContactManager.Pages.Books.IndexModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
+<th>@User.Identity.Name</th>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -20,29 +24,56 @@
                 @Html.DisplayNameFor(model => model.Book[0].Description)
             </th>
             <th>
-                Reader
+                @Html.DisplayNameFor(model => model.Book[0].Reader)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].ReturnDate)
+            </th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contact.Email)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Book)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Rented)
+                    {
+                        @Html.DisplayFor(modelItem => item.Reader)
+                    }
+                </td>
+                <td>
+                    @if (item.Rented)
+                    {
+                        @Html.DisplayFor(modelItem => item.ReturnDate)
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> |
+                    @if (item.Rented && item.Reader == User.Identity.Name)
+                    {
+                        <form asp-page-handler="return" method="post" asp-route-id="@item.Id">
+                            <button class="btn btn-default">Return</button>
+                        </form>
+                    }
+                    else if (!item.Rented)
+                    {
+                        <form asp-page-handler="rent" method="post" asp-route-id="@item.Id">
+                            <button class="btn btn-default">Rent</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

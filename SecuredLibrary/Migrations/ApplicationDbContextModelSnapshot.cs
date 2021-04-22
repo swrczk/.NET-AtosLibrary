@@ -25,9 +25,6 @@ namespace ContactManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(1000)")
@@ -38,9 +35,16 @@ namespace ContactManager.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("Id");
+                    b.Property<string>("Reader")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ContactId");
+                    b.Property<bool>("Rented")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Book");
                 });
@@ -273,13 +277,6 @@ namespace ContactManager.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("ContactManager.Models.Book", b =>
-                {
-                    b.HasOne("ContactManager.Models.Contact", "Contact")
-                        .WithMany("Books")
-                        .HasForeignKey("ContactId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

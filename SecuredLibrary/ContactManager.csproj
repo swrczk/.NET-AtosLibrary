@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-ContactManager-89C27F51-1427-4F4A-BCB3-7AB8F67AC457</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20210420194942_BookRelation.cs" />
+    <Compile Remove="Migrations\20210420194942_BookRelation.Designer.cs" />
+    <Compile Remove="Migrations\20210421205421_Rental.cs" />
+    <Compile Remove="Migrations\20210421205421_Rental.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />

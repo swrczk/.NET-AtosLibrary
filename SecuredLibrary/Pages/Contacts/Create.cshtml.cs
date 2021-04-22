@@ -42,7 +42,7 @@ namespace ContactManager.Pages.Contacts
             {
                 return Page();
             }
-
+            
             _context.Contact.Add(Contact);
             await _context.SaveChangesAsync();
 

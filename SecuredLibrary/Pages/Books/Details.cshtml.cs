@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ContactManager.Data;
 using ContactManager.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ContactManager.Pages.Books
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly ContactManager.Data.ApplicationDbContext _context;

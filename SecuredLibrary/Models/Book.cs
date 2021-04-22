@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ContactManager.Models
 {
@@ -15,6 +12,8 @@ namespace ContactManager.Models
         [Required]
         [MaxLength(1000)]
         public string Description { get; set; }
-        public Contact Contact { get; set; }
+        public String Reader { get; set; }
+        public DateTime ReturnDate { get; set; }
+        public Boolean Rented { get; set; }
     }
 }
