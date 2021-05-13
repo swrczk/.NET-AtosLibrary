@@ -5,20 +5,30 @@
 }
 <link rel="stylesheet" href="~/lib/chartjs/Chart.css" />
 <script src="~/lib/chartjs/Chart.min.js" asp-append-version="true"></script>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
-<div class="chart-container" width="600" height="400">
-    <canvas id="myChart"></canvas>
+<div class="text-center">
+    <h1 class="display-4">Welcome on Library Page!</h1>
+</div>
+<br />
+
+<div class="chart-container text-center" width="600" height="400">
+    <h3 >TOP5 The Most Frequently Borrowed Books </h3>
+    <canvas id="myBookChart"></canvas>
+</div>
+<br />
+
+<div class="chart-container text-center" width="600" height="400">
+    <h3>TOP5 Our Readers</h3>
+    <canvas id="myReaderChart"></canvas>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
 
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, @Html.Raw(Model.ChartJson) );
+        var ctxBook = document.getElementById('myBookChart');
+        var myBookChart = new Chart(ctxBook, @Html.Raw(Model.BookChartJson) );
+        var ctxReader = document.getElementById('myReaderChart');
+        var myReaderChart = new Chart(ctxReader, @Html.Raw(Model.ReaderChartJson) );
 
     });
 </script>

@@ -1,49 +1,90 @@
-﻿using AtosLibrary.Presentation.Chart;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AtosLibrary.Presentation.Chart;
+using AtosLibrary.Presentation.Reservation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace AtosLibrary.WebHost.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        public ChartJs Chart { get; set; }
-        public string ChartJson { get; set; }
-
-        public IndexModel(ILogger<IndexModel> logger)
+        class Statistic
         {
-            _logger = logger;
+            public string key { get; set; }
+            public int cnt { get; set; }
+        }
+
+        private readonly IReservationPresentationRepository _reservationPresentationRepository;
+
+        public string BookChartJson { get; set; }
+        public string ReaderChartJson { get; set; }
+
+        public IndexModel(IReservationPresentationRepository reservationPresentationRepository)
+        {
+            _reservationPresentationRepository = reservationPresentationRepository;
         }
 
         public void OnGet()
         {
-            // Ref: https://www.chartjs.org/docs/latest/
-            var chartData = @"
+            PrepareTopBooksChart();
+            PrepareTopReadersChart();
+        }
+
+        private void PrepareTopBooksChart()
         {
+            var topBooks = _reservationPresentationRepository.Search("")
+                .OrderBy(x => x.BookName)
+                .GroupBy(x => x.BookName)
+                .Select(grp => new Statistic() {key = grp.Key, cnt = grp.Count()})
+                .OrderBy(x => x.cnt)
+                .Take(5)
+                .ToList();
+
+            BookChartJson = PrepareChart(topBooks);
+        }
+
+        private void PrepareTopReadersChart()
+        {
+            var topReaders = _reservationPresentationRepository.Search("")
+                .OrderBy(x => x.ReaderName)
+                .GroupBy(x => x.ReaderName)
+                .Select(grp => new Statistic() {key = grp.Key, cnt = grp.Count()})
+                .OrderBy(x => x.cnt)
+                .Take(5)
+                .ToList();
+
+            ReaderChartJson = PrepareChart(topReaders);
+        }
+
+        private string PrepareChart(List<Statistic> topList)
+        {
+            var names = System.Text.Json.JsonSerializer.Serialize(topList.Select(x => x.key).ToList());
+            var count = System.Text.Json.JsonSerializer.Serialize(topList.Select(x => x.cnt).ToList());
+
+            // Ref: https://www.chartjs.org/docs/latest/  
+            var chartData = @"{
             type: 'bar',
             responsive: true,
             data:
             {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: " + names + @",
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: '# of rentals',
+                    data: " + count + @",
                     backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(153, 102, 255, 0.2)'
                         ],
                     borderColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(153, 102, 255, 1)'
                         ],
                     borderWidth: 1
                 }]
@@ -62,8 +103,8 @@ namespace AtosLibrary.WebHost.Pages
             }
         }";
 
-            Chart = JsonConvert.DeserializeObject<ChartJs>(chartData);
-            ChartJson = JsonConvert.SerializeObject(Chart, new JsonSerializerSettings
+            ChartJs chart = JsonConvert.DeserializeObject<ChartJs>(chartData);
+            return JsonConvert.SerializeObject(chart, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
