@@ -1,0 +1,48 @@
+﻿@page
+@model AtosLibrary.WebHost.ReaderIndexModel
+@{
+    ViewData["Title"] = "ReaderIndex";
+}
+
+<h1>ReaderIndex</h1>
+
+<form method="post">
+    <div class="input-group mb-3">
+        <input asp-for="SearchText" class="form-control" placeholder="Reader" aria-label="Reader" aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" asp-page-handler="search">Search</button>
+        </div>
+    </div>
+</form>
+
+<form method="post">
+    <a class="btn btn-dark" asp-page="./CreateReader">Create New</a>
+    <br/>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 30%">Name</th>
+                <th style="width: 30%">Surname</th>
+                <th style="width: 40%">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contact in Model.Readers)
+            {
+                <tr>
+                    <td>@contact.Name</td>
+                    <td>@contact.Surname</td>
+                    <td>
+                        <a class="btn btn-success" asp-page="./ReserveBook" asp-route-id="@contact.Id">Reserve Books</a>
+                        <a class="btn btn-secondary" asp-page="./EditReader" asp-route-id="@contact.Id">Edit</a>
+                        <button class="btn btn-danger" asp-page-handler="delete" type="submit" asp-route-id="@contact.Id">
+                            delete
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
