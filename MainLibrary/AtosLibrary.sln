@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtosLibrary.WebHost", "Atos
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtosLibrary.Domain", "AtosLibrary.Domain\AtosLibrary.Domain.csproj", "{DACB5A3E-47B0-42A6-96FB-98B39D050900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtosLibrary.Presentation", "AtosLibrary.Presentation\AtosLibrary.Presentation.csproj", "{FFA64C92-06B8-4C6A-A380-D168E70155AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtosLibrary.Presentation", "AtosLibrary.Presentation\AtosLibrary.Presentation.csproj", "{FFA64C92-06B8-4C6A-A380-D168E70155AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtosLibrary.Infrastructure", "AtosLibrary.Infrastructure\AtosLibrary.Infrastructure.csproj", "{417B010C-471E-4F19-BDC4-CC8837963980}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AtosLibrary.Infrastructure", "AtosLibrary.Infrastructure\AtosLibrary.Infrastructure.csproj", "{417B010C-471E-4F19-BDC4-CC8837963980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtosLibrary.Tests", "AtosLibrary.Tests\AtosLibrary.Tests.csproj", "{3A864A65-6811-4C17-B378-4CFDFC9A5D40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{417B010C-471E-4F19-BDC4-CC8837963980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{417B010C-471E-4F19-BDC4-CC8837963980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{417B010C-471E-4F19-BDC4-CC8837963980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A864A65-6811-4C17-B378-4CFDFC9A5D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A864A65-6811-4C17-B378-4CFDFC9A5D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A864A65-6811-4C17-B378-4CFDFC9A5D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A864A65-6811-4C17-B378-4CFDFC9A5D40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
