@@ -10,4 +10,4 @@ The base implementation contains all crucial functions except authentication (pr
 
 ### Secured Library
 
-The base implementation contains all crucial functions except authentication (problem with integration JWT token + Auth0 with .NET Core 3.1).
+Example implementation of authentication for this project.
