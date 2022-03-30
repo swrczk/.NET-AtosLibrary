@@ -1,5 +1,6 @@
 using AtosLibrary.Application.Features.DeleteBookItem;
 using AtosLibrary.Application.Features.EditBookItem;
+using AtosLibrary.Application.Features.EditReader;
 using AtosLibrary.Application.Features.RegistrationBook;
 using AtosLibrary.Application.Features.RegistrationBookItem;
 using AtosLibrary.Application.Features.RegistrationReader;
@@ -51,6 +52,7 @@ namespace AtosLibrary.WebHost
             services.AddScoped<ICommandHandler<RegistrationReaderCommand>, RegistrationReaderCommandHandler>();
             services.AddScoped<ICommandHandler<DeleteReaderCommand>, DeleteReaderCommandHandler>();
             services.AddScoped<ICommandHandler<UpdateReaderCommand>, UpdateReaderCommandHandler>();
+            services.AddScoped<ICommandHandler<EditReaderCommand>, EditReaderCommandHandler>();
             services.AddScoped<ICommandHandler<ReserveBookCommand>, ReserveBookCommandHandler>();
             services.AddScoped<ICommandHandler<EditBookCommand>, EditBookCommandHandler>();
             services.AddScoped<ICommandHandler<DeleteBookCommand>, DeleteBookCommandHandler>();
