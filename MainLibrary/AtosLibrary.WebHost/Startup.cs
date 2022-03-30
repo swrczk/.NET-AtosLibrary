@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using AtosLibrary.Application.Features.DeleteBookItem;
 using AtosLibrary.Application.Features.EditBookItem;
 using AtosLibrary.Application.Features.EditReader;
@@ -21,6 +23,7 @@ using AtosLibrary.Presentation.Reader;
 using AtosLibrary.Presentation.Reservation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -91,6 +94,8 @@ namespace AtosLibrary.WebHost
             services.AddScoped<IReservationPresentationRepository, ReservationPresentationRepository>();
             services.AddScoped<IBookReservationPresentationRepository, BookReservationPresentationRepository>();
             services.AddScoped<IBookItemPresentationRepository, BookItemPresentationRepository>();
+            
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,6 +111,15 @@ namespace AtosLibrary.WebHost
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseStaticFiles(new StaticFileOptions {
+                OnPrepareResponse = ctx =>
+                {
+                    // Cache static files for 30 days
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=2592000");
+                    ctx.Context.Response.Headers.Append("Expires", DateTime.UtcNow.AddDays(30).ToString("R", CultureInfo.InvariantCulture));
+                }
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
